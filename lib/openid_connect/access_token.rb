@@ -23,6 +23,13 @@ module OpenIDConnect
       ResponseObject::IdToken.new hash
     end
 
+    def authenticate(request)
+      request.header["Authorization"] = "Bearer #{access_token}"
+      request.http_header.request_query ||= {}
+      request.http_header.request_query[:access_token] = access_token
+    end
+   
+            
     private
 
     def resource_request
